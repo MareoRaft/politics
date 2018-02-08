@@ -1,10 +1,8 @@
 import os
 
+from config import PATH
 import lib
 from lib.decorate import record_elapsed_time
-
-REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEST1_PATH = os.path.join(REPO_DIR, 'insight_testsuite/tests/test_1/input/itcont.txt')
 
 @record_elapsed_time
 def input_data(file_path):
@@ -18,7 +16,7 @@ def output_data(data):
 	print(data)
 
 if __name__ == '__main__':
-	file_path = TEST1_PATH
+	file_path = PATH['test1']
 	data = input_data(file_path)
 	output_data(data)
 
