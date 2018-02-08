@@ -20,4 +20,3 @@ def test_csv_to_dataframe():
 	assert df.iloc[0]['tx-date'] == '01032017'
 	assert df.iloc[0]['tx-amount'] == 40
 	assert df.iloc[0]['entity'] == 'H6CA34245'
-

@@ -66,7 +66,3 @@ def csv_to_dataframe(file_path):
 		# parse_dates=['tx-date']
 	)
 	return df
-
-# @record_elapsed_time
-# def download_data():
-
