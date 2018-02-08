@@ -1,6 +1,8 @@
-from lib.decorate import record_elapsed_time
+import os
 
 import pandas
+
+from lib.decorate import record_elapsed_time
 
 # col names for government input files
 col_names_full = [
@@ -53,8 +55,9 @@ col_converters = {
 }
 
 @record_elapsed_time
-def csv_to_dataframe(file_path):
-	""" Takes in politics formated CSV file and creates dataframe with only the columns we want. """
+def dir_to_dataframe(dir_path):
+	""" Takes in dir containing CSV file and creates dataframe with only the info we want. """
+	file_path = os.path.join(dir_path, 'itcont.txt')
 	df = pandas.read_csv(file_path,
 		delimiter='|',
 		header=None,
@@ -65,4 +68,6 @@ def csv_to_dataframe(file_path):
 		# infer_datetime_format=True,
 		# parse_dates=['tx-date']
 	)
+	# OMIT records that have nonempty 'entity'
+	df = df[df['entity'].isnull()]
 	return df

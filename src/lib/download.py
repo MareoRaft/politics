@@ -37,4 +37,4 @@ def download_data(year, dir_path):
 @record_elapsed_time
 def download_all_data():
 	for year in range(1980, 2020, 2):
-		download_data_for_year(year, PATH['input'])
+		download_data_for_year(year, PATH('input'))

@@ -17,6 +17,10 @@ Need to know when values are 'malformed' so we can omit those rows, possibly on 
 
 remember to update the list of dependencies when you're finished
 
+consider a 'database engine' or multithreading.
+
+see https://stackoverflow.com/questions/34740592/skip-certain-lines-from-file-using-python-pandas#34741278 for performance differences depending on file size
+
 next thing to do:
   1. move file to a 'tmp' folder in input, unzip there, rename output file, move to appropriate dir.
   2. run pandas on that file and see what happens
