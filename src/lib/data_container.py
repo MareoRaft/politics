@@ -43,10 +43,10 @@ class DataContainer:
 		)
 
 	def sort(self):
-		""" Sorts the dataframe by zip-code and name. """
+		""" Sorts the dataframe by zip-code and donor. """
 		# see https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort_values.html
 		self.df = self.df.sort_values(
-			by=['zip-code', 'name'],
+			by=['zip-code', 'donor'],
 			kind='quicksort', # 'quicksort', 'mergesort', 'heapsort'
 			na_position='first' # well there really SHOULDN'T be any NaNs.  We need to validate our data better
 		)
@@ -55,3 +55,19 @@ class DataContainer:
 		""" Takes in a row and appends it to the dataframe """
 		new_row_index = df.index.max() + 1
 		df.loc[new_row_index] = row
+
+	def stats(self, row):
+		""" Return stats about the data """
+		recipient =
+		zip_code =
+		year =
+		percentile =
+		# for this specific (recipient, year, zip_code)
+		total_amount_contributions =
+		# same
+		total_num_tx =
+
+		output_list = [recipient, zip_code, year, percentile, total_amount_contributions, total_num_tx]
+		output_string = '|'.join(output_list)
+		return output_string
+

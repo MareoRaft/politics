@@ -32,21 +32,21 @@ def get_percentile(file_path):
 # Data columns
 ## col names for government input files
 COL_NAMES_FULL = [
-	'politician', # CMTE_ID
+	'recipient', # CMTE_ID
 	'amendment-indicator', # AMNDT_IND
 	'report-type', # RPT_TP
 	'tx-indicator', # TRANSACTION_PGI
 	'image-num', # IMAGE_NUM
 	'tx-type', # TRANSACTION_TP
 	'entity-type', # ENTITY_TP
-	'name', # NAME
+	'donor', # NAME
 	'city', # CITY
 	'state', # STATE
 	'zip-code', # ZIP_CODE
 	'employer', # EMPLOYER
 	'occupation', # OCCUPATION
-	'tx-date', # TRANSACTION_DT
-	'tx-amount', # TRANSACTION_AMT
+	'year', # TRANSACTION_DT
+	'amount', # TRANSACTION_AMT
 	'entity', # OTHER_ID
 	'tx-ID', # TRAN_ID
 	'file-num', # FILE_NUM
@@ -54,22 +54,22 @@ COL_NAMES_FULL = [
 	'memo-text', # MEMO_TEXT
 	'sub-ID', # SUB_ID
 ]
-## col names we need, (subset of col_names_full)
+## col names we need, (subset of COL_NAMES_FULL)
 COL_NAMES = [
-	'politician',
-	'name',
+	'recipient',
+	'donor',
 	'zip-code',
-	'tx-date',
-	'tx-amount',
-	'entity', # indicates if contribution came from an entity not a person
+	'year',
+	'amount',
+	# 'entity', # indicates if contribution came from an entity not a person
 ]
 ## the data type of each column
 COL_TYPES = {
-	'politician': str,
-	'name': str,
-	'tx-date': str,
-	'tx-amount': int,
-	'entity': str,
+	'recipient': str,
+	'donor': str,
+	'year': str,
+	'amount': int,
+	# 'entity': str,
 }
 ## the data cleaner for each column
 def convert_zip_code(zip_code):

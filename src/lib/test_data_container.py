@@ -32,11 +32,11 @@ def test_init():
 
 	# a single individual (not entity)
 	d = DataContainer(PATH('input', 2))
-	assert d.df.iloc[0]['politician'] == 'C00177436'
-	assert d.df.iloc[0]['name'] == 'DEEHAN, WILLIAM N'
+	assert d.df.iloc[0]['recipient'] == 'C00177436'
+	assert d.df.iloc[0]['donor'] == 'DEEHAN, WILLIAM N'
 	assert d.df.iloc[0]['zip-code'] == '30004'
-	assert d.df.iloc[0]['tx-date'] == '01312017'
-	assert d.df.iloc[0]['tx-amount'] == 384
+	assert d.df.iloc[0]['year'] == '01312017'
+	assert d.df.iloc[0]['amount'] == 384
 	assert not isinstance(d.df.iloc[0]['entity'], str)
 
 	# seven people (one of which is entity)
@@ -52,7 +52,7 @@ def test_sort():
 	correct_zip_order = ['02895', '02895', '02895', '02895', '30004', '30750']
 	zip_order = [row[1]['zip-code'] for row in d.df.iterrows()]
 	assert zip_order == correct_zip_order
-	## names in suborder
-	correct_name_order = ['ABBOTT, JOSEPH', 'ABBOTT, JOSEPH', 'SABOURIN, JAMES', 'SABOURIN, JAMES', 'DEEHAN, WILLIAM N', 'JEROME, CHRISTOPHER']
-	name_order = [row[1]['name'] for row in d.df.iterrows()]
-	assert name_order == correct_name_order
+	## donors in suborder
+	correct_donor_order = ['ABBOTT, JOSEPH', 'ABBOTT, JOSEPH', 'SABOURIN, JAMES', 'SABOURIN, JAMES', 'DEEHAN, WILLIAM N', 'JEROME, CHRISTOPHER']
+	donor_order = [row[1]['donor'] for row in d.df.iterrows()]
+	assert donor_order == correct_donor_order
