@@ -22,10 +22,12 @@ def PATH(keyword, num=None):
 		raise ValueError('Nonempty num and bad keyword.')
 
 # Percentile
-percentile_file_path = path.join(PATH('input'), 'percentile.txt')
-with open(percentile_file_path) as file:
-	percentile_string = file.read()
-PERCENTILE = int(percentile_string.strip())
+def get_percentile(file_path):
+	""" gets percentile from percentile file """
+	with open(file_path) as file:
+		percentile_string = file.read()
+	percentile = int(percentile_string.strip())
+	return percentile
 
 # Data columns
 ## col names for government input files
