@@ -1,6 +1,7 @@
 ### Misc ###
 elapsed_times.log
 input/*
+output/*
 *.tmp
 
 

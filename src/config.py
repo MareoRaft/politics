@@ -8,6 +8,7 @@ PATH_DICT = {
 	'input': path.join(REPO_PATH, 'input'),
 	'output': path.join(REPO_PATH, 'output'),
 	'tests': path.join(REPO_PATH, 'insight_testsuite/tests'),
+	'blank-csv': path.join(REPO_PATH, 'src/blank.csv'),
 }
 def PATH(keyword, num=None):
 	if num is None:
@@ -32,48 +33,50 @@ def get_percentile(file_path):
 # Data columns
 ## col names for government input files
 COL_NAMES_FULL = [
-	'recipient', # CMTE_ID
-	'amendment-indicator', # AMNDT_IND
-	'report-type', # RPT_TP
-	'tx-indicator', # TRANSACTION_PGI
-	'image-num', # IMAGE_NUM
-	'tx-type', # TRANSACTION_TP
-	'entity-type', # ENTITY_TP
-	'donor', # NAME
-	'city', # CITY
-	'state', # STATE
-	'zip-code', # ZIP_CODE
-	'employer', # EMPLOYER
-	'occupation', # OCCUPATION
-	'year', # TRANSACTION_DT
-	'amount', # TRANSACTION_AMT
-	'entity', # OTHER_ID
-	'tx-ID', # TRAN_ID
-	'file-num', # FILE_NUM
-	'memo-code', # MEMO_CD
-	'memo-text', # MEMO_TEXT
-	'sub-ID', # SUB_ID
+	'recipient', # CMTE_ID 0
+	'amendment-indicator', # AMNDT_IND 1
+	'report-type', # RPT_TP 2
+	'tx-indicator', # TRANSACTION_PGI 3
+	'image-num', # IMAGE_NUM 4
+	'tx-type', # TRANSACTION_TP 5
+	'entity-type', # ENTITY_TP 6
+	'donor', # NAME 7
+	'city', # CITY 8
+	'state', # STATE 9
+	'zip-code', # ZIP_CODE 10
+	'employer', # EMPLOYER 11
+	'occupation', # OCCUPATION 12
+	'year', # TRANSACTION_DT 13
+	'amount', # TRANSACTION_AMT 14
+	'entity', # OTHER_ID 15
+	'tx-ID', # TRAN_ID 16
+	'file-num', # FILE_NUM 17
+	'memo-code', # MEMO_CD 18
+	'memo-text', # MEMO_TEXT 19
+	'sub-ID', # SUB_ID 20
 ]
 ## col names we need, (subset of COL_NAMES_FULL)
 COL_NAMES = [
-	'recipient',
-	'donor',
-	'zip-code',
-	'year',
-	'amount',
-	# 'entity', # indicates if contribution came from an entity not a person
+	'recipient', # 0
+	'donor', # 7
+	'zip-code', # 10
+	'year', # 13
+	'amount', # 14
 ]
 ## the data type of each column
 COL_TYPES = {
 	'recipient': str,
 	'donor': str,
-	'year': str,
-	'amount': int,
-	# 'entity': str,
 }
 ## the data cleaner for each column
 def convert_zip_code(zip_code):
-	return zip_code[0:5]
+	return zip_code[:5]
+def convert_year(date_string):
+	return date_string[-4:]
+def convert_amount(amount_string):
+	return int(amount_string)
 COL_CONVERTERS = {
 	'zip-code': convert_zip_code,
+	'year': convert_year,
+	'amount': convert_amount,
 }
