@@ -47,6 +47,52 @@ def test_row_string_to_row():
 		'amount': 250,
 	}
 
+def test_ordinal_rank_percentile():
+	vals = [15, 20, 35, 40, 50]
+	p = 0
+	with pytest.raises(ValueError):
+		ordinal_rank_percentile(p, vals)
+
+	vals = [15, 20, 35, 40, 50]
+	p = 1
+	assert ordinal_rank_percentile(p, vals) == 15
+
+	vals = [15, 20, 35, 40, 50]
+	p = 5
+	assert ordinal_rank_percentile(p, vals) == 15
+
+	vals = [15, 20, 35, 40, 50]
+	p = 30
+	assert ordinal_rank_percentile(p, vals) == 20
+
+	vals = [15, 20, 35, 40, 50]
+	p = 40
+	assert ordinal_rank_percentile(p, vals) == 20
+
+	vals = [15, 20, 35, 40, 50]
+	p = 50
+	assert ordinal_rank_percentile(p, vals) == 35
+
+	vals = [15, 20, 35, 40, 50]
+	p = 100
+	assert ordinal_rank_percentile(p, vals) == 50
+
+	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
+	p = 25
+	assert ordinal_rank_percentile(p, vals) == 7
+
+	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
+	p = 50
+	assert ordinal_rank_percentile(p, vals) == 9
+
+	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
+	p = 75
+	assert ordinal_rank_percentile(p, vals) == 15
+
+	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
+	p = 100
+	assert ordinal_rank_percentile(p, vals) == 20
+
 def test_init():
 	# a single entity
 	d = DataContainer()
