@@ -94,12 +94,10 @@ def test_ordinal_rank_percentile():
 	assert ordinal_rank_percentile(p, vals) == 20
 
 def test_init():
-	# a single entity
 	d = DataContainer()
-	assert len(d.df) == 0
 
-def test_append_row():
-	# one row
+def test_add_person():
+	# one person
 	d = DataContainer()
 	row = {
 		'recipient': 'C00384818',
@@ -108,8 +106,9 @@ def test_append_row():
 		'year': '2017',
 		'amount': 250,
 	}
-	d.append_row(row)
-	assert len(d.df) == 1
+	d.add_person(row)
+	assert len(d.people) == 1
+	assert '02895ABBOTT, JOSEPH' in d.people
 
 	# two rows
 	d = DataContainer()
@@ -120,7 +119,7 @@ def test_append_row():
 		'year': '2017',
 		'amount': 250,
 	}
-	d.append_row(row)
+	d.add_person(row)
 	row = {
 		'recipient': 'C00384818',
 		'donor': 'ABBOTT, JOSEPH 2',
@@ -128,35 +127,52 @@ def test_append_row():
 		'year': '2017',
 		'amount': 250,
 	}
-	d.append_row(row)
-	assert len(d.df) == 2
+	d.add_person(row)
+	assert len(d.people) == 2
+
+def add_repeat_contrib():
+	# one contrib
+	d = DataContainer()
+	row = {
+		'recipient': 'C00384818',
+		'donor': 'ABBOTT, JOSEPH',
+		'zip-code': '02895',
+		'year': '2017',
+		'amount': 250,
+	}
+	d.add_repeat_contrib(row)
+	assert len(d.m['2017']['02895']['C00384818']) == 1
+
+	# two rows
+	d = DataContainer()
+	row = {
+		'recipient': 'C00384818',
+		'donor': 'ABBOTT, JOSEPH',
+		'zip-code': '02895',
+		'year': '2017',
+		'amount': 250,
+	}
+	d.add_repeat_contrib(row)
+	row = {
+		'recipient': 'C00384818',
+		'donor': 'ABBOTT, JOSEPH 2',
+		'zip-code': '02895',
+		'year': '2017',
+		'amount': 250,
+	}
+	d.add_repeat_contrib(row)
+	assert len(d.m['2017']['02895']['C00384818']) == 2
+
 
 def test_stream():
 	# a single entity
 	d = stream(PATH('test', 1))
-	assert len(d.df) == 0
+	assert len(d.people) == 0
 
 	# a single individual (not entity)
 	d = stream(PATH('test', 2))
-	assert d.df.iloc[0]['recipient'] == 'C00177436'
-	assert d.df.iloc[0]['donor'] == 'DEEHAN, WILLIAM N'
-	assert d.df.iloc[0]['zip-code'] == '30004'
-	assert d.df.iloc[0]['year'] == '2017'
-	assert d.df.iloc[0]['amount'] == 384
+	assert len(d.people) == 1
 
-	# seven people (one of which is entity)
+	# seven records (but only 4 people)
 	d = stream(PATH('test', 3))
-	assert len(d.df) == 6
-
-def test_sort():
-	# six legit people
-	d = stream(PATH('test', 3))
-	d.sort()
-	## zips in order
-	correct_zip_order = ['02895', '02895', '02895', '02895', '30004', '30750']
-	zip_order = [row[1]['zip-code'] for row in d.df.iterrows()]
-	assert zip_order == correct_zip_order
-	## donors in suborder
-	correct_donor_order = ['ABBOTT, JOSEPH', 'ABBOTT, JOSEPH', 'SABOURIN, JAMES', 'SABOURIN, JAMES', 'DEEHAN, WILLIAM N', 'JEROME, CHRISTOPHER']
-	donor_order = [row[1]['donor'] for row in d.df.iterrows()]
-	assert donor_order == correct_donor_order
+	assert len(d.people) == 4

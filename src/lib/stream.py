@@ -33,14 +33,12 @@ def stream(dir_path):
 				if not is_valid_row:
 					continue
 				# before adding person, detect if they've already contributed
-				person = (row['zip-code'], row['donor'])
-				is_repeat_donor = d.has_donor(person)
+				is_repeat_donor = d.has_donor(row)
 				# add person
-				d.append_row(row)
-				d.sort() # possibly not needed?  depends on how we calculate the total contribs by recipient, zip code, year
+				d.add_person(row)
 				if is_repeat_donor:
 					# add the contrib to the list of repeat contribs
-					d.contrib_amounts.append(row['amount'])
+					d.add_repeat_contrib(row)
 					stats = d.stats(row, percentile)
 					out.write(stats)
 	print('Streaming simulation complete!!  See output file {}'.format(output_path))

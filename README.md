@@ -31,6 +31,10 @@ see https://stackoverflow.com/questions/34740592/skip-certain-lines-from-file-us
    make a new small one (say 15 entries) and calculate the correct_output.txt file yourself.
    then fix the thing above and then run the test
 
+make the matrix just a single dictionary to see if it helps performance.
+
+we might be able to go faster if we keep the donation amount lists sorted by simply inserting new values in the correct location
+
 next thing to do:
   1. move file to a 'tmp' folder in input, unzip there, rename output file, move to appropriate dir.
   2. run pandas on that file and see what happens
