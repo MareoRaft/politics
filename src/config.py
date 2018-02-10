@@ -40,7 +40,7 @@ COL_NAMES_FULL = [
 	'image-num', # IMAGE_NUM 4
 	'tx-type', # TRANSACTION_TP 5
 	'entity-type', # ENTITY_TP 6
-	'donor', # NAME 7
+	'name', # NAME 7
 	'city', # CITY 8
 	'state', # STATE 9
 	'zip-code', # ZIP_CODE 10
@@ -58,7 +58,7 @@ COL_NAMES_FULL = [
 ## col names we need, (subset of COL_NAMES_FULL)
 COL_NAMES = [
 	'recipient', # 0
-	'donor', # 7
+	'name', # 7
 	'zip-code', # 10
 	'year', # 13
 	'amount', # 14
@@ -66,7 +66,7 @@ COL_NAMES = [
 ## the data type of each column
 COL_TYPES = {
 	'recipient': str,
-	'donor': str,
+	'name': str,
 }
 ## the data cleaner for each column
 def convert_zip_code(zip_code):

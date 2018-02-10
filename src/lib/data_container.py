@@ -19,7 +19,7 @@ def row_string_to_row(row_string):
 	# restrict to just the columns we want
 	row = {
 		'recipient': row_list[0],
-		'donor': row_list[7],
+		'name': row_list[7],
 		'zip-code': convert_zip_code(row_list[10]),
 		'year': convert_year(row_list[13]),
 		'amount': convert_amount(row_list[14]),
@@ -50,7 +50,7 @@ class DataContainer:
 		self.m = dict()
 
 	def init_donor_list(self):
-		self.people = dict()
+		self.donors = dict()
 
 	def contrib_num(self, block_id):
 		# or for more speed, just keep track of the total in a separate variable
@@ -71,9 +71,9 @@ class DataContainer:
 			self.m[block_id] = list()
 		self.m[block_id].append(amount)
 
-	def add_person(self, person_id):
+	def add_donor(self, donor_id):
 		""" add to donor list """
-		self.people[person_id] = None
+		self.donors[donor_id] = None
 
 	def percentile_contrib(self, percentile, block_id):
 		""" Get the 'percentile' amount from the contrib_amounts list """
@@ -91,6 +91,6 @@ class DataContainer:
 		output_string = '|'.join(output_list) + '\n'
 		return output_string
 
-	def has_donor(self, person_id):
+	def has_donor(self, donor_id):
 		""" return true if the donor already exists in the df """
-		return person_id in self.people
+		return donor_id in self.donors
