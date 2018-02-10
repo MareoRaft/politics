@@ -1,1 +1,1 @@
-10,000 people
+10,000 records
