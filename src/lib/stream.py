@@ -27,19 +27,24 @@ def stream(dir_path):
 	d = DataContainer()
 	# To simulate streaming, I ONLY ALLOW myself to view the file ONE LINE at a time, and I MUST output updated information after each line read (and even close the filehandle to the output file)
 	with open(output_path, 'a') as out:
-		with open(input_path) as file:
+		# reading the file in binary mode seems to be more tolerant, so we convert each line to a str manually
+		with open(input_path, 'rb') as file:
 			for line in file:
+				# the saddest way to tolerate bad characters ever:
+				line = str(line)[2:-3]
 				(is_valid_row, row) = row_string_to_row(line)
 				if not is_valid_row:
 					continue
 				# before adding person, detect if they've already contributed
-				is_repeat_donor = d.has_donor(row)
+				person_id = row['zip-code'] + row['donor']
+				is_repeat_donor = d.has_donor(person_id)
 				# add person
-				d.add_person(row)
+				d.add_person(person_id)
 				if is_repeat_donor:
+					block_id = row['year'] + row['zip-code'] + row['recipient']
 					# add the contrib to the list of repeat contribs
-					d.add_repeat_contrib(row)
-					stats = d.stats(row, percentile)
+					d.add_repeat_contrib(row['amount'], block_id)
+					stats = d.stats(percentile, row['year'], row['zip-code'], row['recipient'], block_id)
 					out.write(stats)
 	print('Streaming simulation complete!!  See output file {}'.format(output_path))
 	return d

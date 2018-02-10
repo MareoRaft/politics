@@ -3,6 +3,7 @@ elapsed_times.log
 input/*
 output/*
 *.tmp
+test_7/
 
 
 ### Python ###
