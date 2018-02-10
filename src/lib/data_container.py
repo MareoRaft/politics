@@ -96,9 +96,10 @@ class DataContainer:
 			self.m[block_id] = list()
 		self.m[block_id].append(amount)
 
-	def add_donor(self, donor_id):
+	def add_donor(self, donor_id, year):
 		""" add to donor list """
-		self.donors[donor_id] = None
+		if donor_id not in self.donors:
+			self.donors[donor_id] = year
 
 	def percentile_contrib(self, percentile, block_id):
 		""" Get the 'percentile' amount from the contrib_amounts list """
@@ -116,6 +117,10 @@ class DataContainer:
 		output_string = '|'.join(output_list) + '\n'
 		return output_string
 
-	def has_donor(self, donor_id):
+	def is_repeat_donor(self, donor_id, year):
 		""" return true if the donor already exists in the df """
-		return donor_id in self.donors
+		if donor_id in self.donors:
+			if year > self.donors[donor_id]:
+				return True
+		return False
+

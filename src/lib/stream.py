@@ -37,9 +37,9 @@ def stream(dir_path):
 					continue
 				# before adding person, detect if they've already contributed
 				donor_id = row['zip-code'] + row['name']
-				is_repeat_donor = d.has_donor(donor_id)
+				is_repeat_donor = d.is_repeat_donor(donor_id, row['year'])
 				# add person
-				d.add_donor(donor_id)
+				d.add_donor(donor_id, row['year'])
 				if is_repeat_donor:
 					block_id = row['year'] + row['zip-code'] + row['recipient']
 					# add the contrib to the list of repeat contribs
