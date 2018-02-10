@@ -21,10 +21,11 @@ def test_performance():
 	stream(PATH('test', 6))
 	# 1.5-2.5 seconds
 
-	# # 1,000,000 records
-	# stream(PATH('test', 7))
-	# # 15.5 - 16.5 seconds
-	# # tuples same speed as concatenation
-	# # better to pass around pieces or pre-calculate IDs than to pass around rows
-	# # 15.5 - 16 seconds
+	# 1,000,000 records
+	stream(PATH('test', 7))
+	# 15.5 - 16.5 seconds
+	# tuples same speed as concatenation
+	# better to pass around pieces or pre-calculate IDs than to pass around rows
+	# 15.5 - 16 seconds
+	# with error checking: 22 seconds
 

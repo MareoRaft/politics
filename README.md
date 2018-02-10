@@ -29,12 +29,11 @@ see https://stackoverflow.com/questions/34740592/skip-certain-lines-from-file-us
    make a new small one (say 15 entries) and calculate the correct_output.txt file yourself.
    then fix the thing above and then run the test
 
-the prompt says a donor 'in a prior calendar year' which suggests that a donor twice in the SAME year is NOT a repeat donor.
+the prompt says a donor 'in a prior calendar year' which suggests that a donor twice in the SAME year is NOT a repeat donor.....YES we DO have to change the way we detect REPEAT donors
 
-
-next thing to do:
-  1. move file to a 'tmp' folder in input, unzip there, rename output file, move to appropriate dir.
-  2. run pandas on that file and see what happens
-
+If TRANSACTION_DT is an invalid date (e.g., empty, malformed)
+If ZIP_CODE is an invalid zip code (i.e., empty, fewer than five digits)
+If the NAME is an invalid name (e.g., empty, malformed)
+If any lines in the input file contains empty cells in the CMTE_ID or TRANSACTION_AMT fields
 
 

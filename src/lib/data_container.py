@@ -13,17 +13,42 @@ def row_string_to_row(row_string):
 	# probably not necessary:
 	for val in row_list:
 		val = val.strip()
-	# if the transaction is from an entity, return False to show row invalid
-	if row_list[15] != '':
-		return (False, None)
 	# restrict to just the columns we want
 	row = {
 		'recipient': row_list[0],
 		'name': row_list[7],
-		'zip-code': convert_zip_code(row_list[10]),
-		'year': convert_year(row_list[13]),
-		'amount': convert_amount(row_list[14]),
+		'zip-code': row_list[10],
+		'year': row_list[13],
+		'amount': row_list[14],
+		'entity': row_list[15],
 	}
+
+	# Check for a bad row.
+	## if the transaction is from an entity, return False to show row invalid
+	if row_list[15] != '':
+		return (False, None)
+	## If TRANSACTION_DT is an invalid date (e.g., empty, malformed)
+	if len(row['year']) < 4:
+		return (False, None)
+	## If ZIP_CODE is an invalid zip code (i.e., empty, fewer than five digits)
+	if len(row['zip-code']) < 5:
+		return (False, None)
+	## If the NAME is an invalid name (e.g., empty, malformed)
+	if len(row['name']) == 0:
+		return (False, None)
+	## If any lines in the input file contains empty cells in the CMTE_ID or TRANSACTION_AMT fields
+	if len(row['recipient']) == 0:
+		return (False, None)
+	if len(row['amount']) == 0:
+		return (False, None)
+	# if the amount is 0 or negative, ignore
+	if row['amount'] <= 0:
+		return (False, None)
+
+	# Clean values, then succeed.
+	row['zip-code'] = convert_zip_code(row['zip-code'])
+	row['year'] = convert_year(row['year'])
+	row['amount'] = convert_amount(row['amount'])
 	return (True, row)
 
 def ordinal_rank_percentile(percentile, lis):
