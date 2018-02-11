@@ -1,7 +1,6 @@
 import os
 import csv
 
-import pandas
 import numpy
 
 from config import PATH, COL_NAMES_FULL, COL_NAMES, COL_TYPES, COL_CONVERTERS, convert_zip_code, convert_year, convert_amount
@@ -42,7 +41,11 @@ def row_string_to_row(row_string):
 	if len(row['amount']) == 0:
 		return (False, None)
 	# if the amount is 0 or negative, ignore
-	if row['amount'] <= 0:
+	try:
+		int(row['amount'])
+	except:
+		return (False, None)
+	if int(row['amount']) <= 0:
 		return (False, None)
 
 	# Clean values, then succeed.

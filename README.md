@@ -1,17 +1,23 @@
 # politics
 
 ## dependencies
-Using python3 (3.6.1) on my system, not compatible with python2
+Installation procedure:
 
-python3
-python3 modules:
-  * pandas (for dataframe stuff)
+Install python3.
+
+(Details: Tested with python3 (3.6.1) on my system, but should work with any version of python3.  download.py may fail for python 3.4 and earlier due to changes in the builtin subprocess module, but download.py is not currently used in the script anyway.  Not compatible with python2)
+
+Install the following PyPI modules onto your python3 installation:
   * numpy (only for the ceil function)
-  * wget (if downloading data)
-  * zipfile (if downloading data)
   * pytest (if running tests)
+  * wget (if using download.py)
+  * zipfile (if using download.py)
 
 ## run instructions
+
+Make sure you have 'python3' in your PATH and that this 'python3' points to your python3 installation.  Navigate to the root of the repo and execute
+
+    sh ./run.sh
 
 ## approach
 
