@@ -8,6 +8,9 @@ from lib.decorate import record_elapsed_time
 
 def row_string_to_row(row_string):
 	""" Takes in a single line (string) and converts it to a 'row' for the dataframe """
+	# if row is empty, move on
+	if row_string.strip() == '':
+		return (False, None)
 	row_list = row_string.split('|')
 	# probably not necessary:
 	for val in row_list:
@@ -101,7 +104,9 @@ class DataContainer:
 
 	def add_donor(self, donor_id, year):
 		""" add to donor list """
+		# only add them if they aren't already in the list
 		if donor_id not in self.donors:
+			# record the year so that we can detect later if they are a repeat donor
 			self.donors[donor_id] = year
 
 	def percentile_contrib(self, percentile, block_id):
@@ -123,7 +128,9 @@ class DataContainer:
 	def is_repeat_donor(self, donor_id, year):
 		""" return true if the donor already exists in the df """
 		if donor_id in self.donors:
-			if year > self.donors[donor_id]:
+			if year != self.donors[donor_id]:
+				# set year to 'None' marking them permanently as a repeat donor
+				self.donors[donor_id] = None
 				return True
 		return False
 

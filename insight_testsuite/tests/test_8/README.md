@@ -1,0 +1,1 @@
+Self-made test.  Includes many pathological use cases.
