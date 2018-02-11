@@ -3,176 +3,101 @@ import os
 import pytest
 
 from config import *
+from lib.helpers import get_donor_id, get_block_id
 from lib.data_container import *
 from lib.stream import stream
 
 
-def test_convert_zip_code():
-	assert convert_zip_code('90017') == '90017'
-	assert convert_zip_code('028956146') == '02895'
-	assert convert_zip_code('307502818') == '30750'
+# Donors
+def test_Donors_init():
+	d = Donors()
 
-def test_convert_year():
-	assert convert_year('1986') == '1986'
-	assert convert_year('01032017') == '2017'
-	assert convert_year('01122018') == '2018'
-
-def test_row_string_to_row():
-	# entity
-	row_string = 'C00629618|N|TER|P|201701230300133512|15C|IND|PEREZ, JOHN A|LOS ANGELES|CA|90017|PRINCIPAL|DOUBLE NICKEL ADVISORS|01032017|40|H6CA34245|SA01251735122|1141239|||2012520171368850783'
-	is_valid, row = row_string_to_row(row_string)
-	assert not is_valid
-
-	# individual, no newline
-	row_string = 'C00177436|N|M2|P|201702039042410894|15|IND|DEEHAN, WILLIAM N|ALPHARETTA|GA|300047357|UNUM|SVP, SALES, CL|01312017|384||PR2283873845050|1147350||P/R DEDUCTION ($192.00 BI-WEEKLY)|4020820171370029337'
-	is_valid, row = row_string_to_row(row_string)
-	assert is_valid
-	assert row == {
-		'recipient': 'C00177436',
-		'donor': 'DEEHAN, WILLIAM N',
-		'zip-code': '30004',
-		'year': '2017',
-		'amount': 384,
-	}
-
-	# individual, newline
-	row_string = 'C00384818|N|M2|P|201702039042412112|15|IND|ABBOTT, JOSEPH|WOONSOCKET|RI|028956146|CVS HEALTH|VP, RETAIL PHARMACY OPS|01122017|250||2017020211435-887|1147467|||4020820171370030285\n'
-	is_valid, row = row_string_to_row(row_string)
-	assert is_valid
-	assert row == {
-		'recipient': 'C00384818',
-		'donor': 'ABBOTT, JOSEPH',
-		'zip-code': '02895',
-		'year': '2017',
-		'amount': 250,
-	}
-
-def test_ordinal_rank_percentile():
-	vals = [15, 20, 35, 40, 50]
-	p = 0
-	with pytest.raises(ValueError):
-		ordinal_rank_percentile(p, vals)
-
-	vals = [15, 20, 35, 40, 50]
-	p = 1
-	assert ordinal_rank_percentile(p, vals) == 15
-
-	vals = [15, 20, 35, 40, 50]
-	p = 5
-	assert ordinal_rank_percentile(p, vals) == 15
-
-	vals = [15, 20, 35, 40, 50]
-	p = 30
-	assert ordinal_rank_percentile(p, vals) == 20
-
-	vals = [15, 20, 35, 40, 50]
-	p = 40
-	assert ordinal_rank_percentile(p, vals) == 20
-
-	vals = [15, 20, 35, 40, 50]
-	p = 50
-	assert ordinal_rank_percentile(p, vals) == 35
-
-	vals = [15, 20, 35, 40, 50]
-	p = 100
-	assert ordinal_rank_percentile(p, vals) == 50
-
-	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
-	p = 25
-	assert ordinal_rank_percentile(p, vals) == 7
-
-	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
-	p = 50
-	assert ordinal_rank_percentile(p, vals) == 9
-
-	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
-	p = 75
-	assert ordinal_rank_percentile(p, vals) == 15
-
-	vals = [6, 3, 7, 8, 8, 20, 16, 9, 10, 13, 15]
-	p = 100
-	assert ordinal_rank_percentile(p, vals) == 20
-
-def test_init():
-	d = DataContainer()
-
-def test_add_person():
+def test_Donors_add():
 	# one person
-	d = DataContainer()
+	d = Donors()
 	row = {
 		'recipient': 'C00384818',
-		'donor': 'ABBOTT, JOSEPH',
+		'name': 'ABBOTT, JOSEPH',
 		'zip-code': '02895',
 		'year': '2017',
 		'amount': 250,
 	}
-	d.add_person(row)
-	assert len(d.people) == 1
-	assert '02895ABBOTT, JOSEPH' in d.people
+	d.add(row['zip-code'] + row['name'], row['year'])
+	assert len(d.donors) == 1
+	assert '02895ABBOTT, JOSEPH' in d.donors
 
 	# two rows
-	d = DataContainer()
+	d = Donors()
 	row = {
 		'recipient': 'C00384818',
-		'donor': 'ABBOTT, JOSEPH',
+		'name': 'ABBOTT, JOSEPH',
 		'zip-code': '02895',
 		'year': '2017',
 		'amount': 250,
 	}
-	d.add_person(row)
+	d.add(get_donor_id(row), row['year'])
 	row = {
 		'recipient': 'C00384818',
-		'donor': 'ABBOTT, JOSEPH 2',
+		'name': 'ABBOTT, JOSEPH 2',
 		'zip-code': '02895',
 		'year': '2017',
 		'amount': 250,
 	}
-	d.add_person(row)
-	assert len(d.people) == 2
+	d.add(get_donor_id(row), row['year'])
+	assert len(d.donors) == 2
 
-def add_repeat_contrib():
+
+# Contributions
+def test_Contributions_init():
+	c = Contributions()
+
+def test_Contributions_add():
 	# one contrib
-	d = DataContainer()
+	c = Contributions()
 	row = {
 		'recipient': 'C00384818',
-		'donor': 'ABBOTT, JOSEPH',
+		'name': 'ABBOTT, JOSEPH',
 		'zip-code': '02895',
 		'year': '2017',
 		'amount': 250,
 	}
-	d.add_repeat_contrib(row)
-	assert len(d.m['2017']['02895']['C00384818']) == 1
+	b_id = get_block_id(row)
+	c.add(row['amount'], b_id)
+	assert len(c.contribs[b_id]) == 1
 
 	# two rows
-	d = DataContainer()
+	c = Contributions()
 	row = {
 		'recipient': 'C00384818',
-		'donor': 'ABBOTT, JOSEPH',
+		'name': 'ABBOTT, JOSEPH',
 		'zip-code': '02895',
 		'year': '2017',
 		'amount': 250,
 	}
-	d.add_repeat_contrib(row)
+	c.add(row['amount'], get_block_id(row))
 	row = {
 		'recipient': 'C00384818',
-		'donor': 'ABBOTT, JOSEPH 2',
+		'name': 'ABBOTT, JOSEPH 2',
 		'zip-code': '02895',
 		'year': '2017',
 		'amount': 250,
 	}
-	d.add_repeat_contrib(row)
-	assert len(d.m['2017']['02895']['C00384818']) == 2
+	b_id = get_block_id(row)
+	c.add(row['amount'], b_id)
+	assert len(c.contribs[b_id]) == 2
 
 
+# stream
 def test_stream():
 	# a single entity
 	d = stream(PATH('test', 1))
-	assert len(d.people) == 0
+	assert len(d.donors) == 0
 
 	# a single individual (not entity)
 	d = stream(PATH('test', 2))
-	assert len(d.people) == 1
+	assert len(d.donors) == 1
 
-	# seven records (but only 4 people)
+	# seven records (but only 4 donors)
 	d = stream(PATH('test', 3))
-	assert len(d.people) == 4
+	assert len(d.donors) == 4
+

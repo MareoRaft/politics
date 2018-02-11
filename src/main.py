@@ -1,8 +1,5 @@
 import sys
-import os
 
-from config import PATH
-from lib.decorate import record_elapsed_time
 from lib.stream import stream
 
 if sys.version_info[0] < 3:
