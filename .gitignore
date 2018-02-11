@@ -4,6 +4,9 @@ input/*
 output/*
 *.tmp
 test_7/
+test_9/
+temp/
+results.txt
 
 
 ### Python ###
