@@ -1,5 +1,6 @@
 import os
 
+
 def clear(file_path, noclobber=False):
 	""" Removes a file.  If file exists and noclobber=True, it will ask if you want to overwrite it. """
 	if os.path.lexists(file_path) and noclobber:

@@ -9,6 +9,7 @@ PATH_DICT = {
 	'output': path.join(REPO_PATH, 'output'),
 	'tests': path.join(REPO_PATH, 'insight_testsuite/tests'),
 	'blank-csv': path.join(REPO_PATH, 'src/blank.csv'),
+	'temp': path.join(REPO_PATH, 'temp-tests'),
 }
 def PATH(keyword, num=None):
 	if num is None:

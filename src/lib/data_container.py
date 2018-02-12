@@ -1,7 +1,6 @@
 import os
 
 from lib.helpers import ordinal_rank_percentile
-from lib.decorate import record_elapsed_time
 
 
 class Donors:

@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from config import *
+from config import PATH
 from lib.helpers import get_donor_id, get_block_id
 from lib.data_container import *
 from main import main
@@ -85,19 +85,4 @@ def test_Contributions_add():
 	b_id = get_block_id(row)
 	c.add(row['amount'], b_id)
 	assert len(c.contribs[b_id]) == 2
-
-
-# main
-def test_main():
-	# a single entity
-	d = main(PATH('test', 1))
-	assert len(d.donors) == 0
-
-	# a single individual (not entity)
-	d = main(PATH('test', 2))
-	assert len(d.donors) == 1
-
-	# 7 records (but only 4 donors)
-	d = main(PATH('test', 3))
-	assert len(d.donors) == 4
 

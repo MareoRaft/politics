@@ -1,4 +1,5 @@
-""" clogging = custom logging
+""" (Note: This module is not currently in use.)
+clogging = custom logging
 This is a wrapper around the built-in logging module with some custom defaults and color support via colorlog.
 
 Usage:
@@ -7,7 +8,9 @@ log = clogging.getLogger('somename')
 log.debug('my message') or log.warning('my message'), etc.
 """
 import logging
+
 import colorlog
+
 
 FORMAT_TEMPLATE = '%(asctime)s.%(msecs)03d sec  %(filename)s line %(lineno)d  {}%(levelname)s{}: {}%(message)s'
 FORMAT_DEFAULT = FORMAT_TEMPLATE.format('', '', '')

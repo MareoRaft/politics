@@ -2,6 +2,7 @@ import math
 
 from config import convert_zip_code, convert_year, convert_amount
 
+
 def get_donor_id(row):
 	return (row['zip-code'], row['name'])
 

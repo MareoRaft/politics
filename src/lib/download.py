@@ -1,3 +1,5 @@
+""" (Note: This module is not currently in use.)  This module automates downloading voter data from the government website.  It remains part of this repository as a potentially helpful tool.
+"""
 import os
 import subprocess
 

@@ -1,7 +1,10 @@
+""" (Note: This module is not currently in use.)  This is a collection of decorators that could come in handy.  The record_elapsed_time decorator is useful tool for identifying functions that run too slowly.  An even better strategy would be to use profiler.
+"""
 import time
 import logging
 
 from lib import clogging
+
 
 def transparent(decorator):
 	""" Decorators have a few unwanted side effects.  This decorator, when used on a decorator, reverses those side-effects!

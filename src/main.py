@@ -6,10 +6,6 @@ from lib.helpers import row_string_to_row, get_donor_id, get_block_id
 from lib.data_container import Donors, Contributions
 from lib.stream import stream, clear
 
-# Now compatible with both python2 and python3.
-# if sys.version_info[0] < 3:
-# 	raise SystemExit('Please use Python version 3.')
-
 def process_line(line, percentile, donors, contribs):
 	(is_valid_row, row) = row_string_to_row(line)
 	if not is_valid_row:
@@ -45,3 +41,4 @@ def main(dir_path):
 
 if __name__ == '__main__':
 	main(PATH('repo'))
+
