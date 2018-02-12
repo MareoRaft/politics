@@ -73,8 +73,9 @@ def ordinal_rank_percentile(percentile, lis):
 		raise ValueError('Percentile P must satisfy 0 < P <= 100.')
 	lis = sorted(lis)
 	num_vals = len(lis)
-	# the int and float conversions are for compatibility with python2
-	ordinal_rank = int(math.ceil(float(percentile)/100 * num_vals))
+	# note that the following would fail in python2
+	ordinal_rank = math.ceil(percentile/100 * num_vals)
 	ordinal_index = ordinal_rank - 1
 	percentile_val = lis[ordinal_index]
 	return percentile_val
+

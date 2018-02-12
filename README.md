@@ -5,7 +5,7 @@
 ## Dependencies
 Installation procedure:
 
-  1. Install python3 or python2.
+  1. Install python3.
 
 NO dependencies necessary for main script.  For additional functionalities, install:
   * pytest (only if you want to run the unit tests)
@@ -17,7 +17,7 @@ NO dependencies necessary for main script.  For additional functionalities, inst
 
 ## Run instructions
 
-Make sure you have 'python' in your PATH and that this 'python' points to your python3 or python2 installation.  Navigate to the root of the repo and execute:
+Make sure you have 'python3' in your PATH and that this 'python3' points to your python3 installation.  Navigate to the root of the repo and execute:
 
     sh ./run.sh
 
