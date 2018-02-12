@@ -36,24 +36,24 @@ def row_string_to_row(row_string):
 	}
 
 	# Check for a bad row.
-	## if the transaction is from an entity, return False to show row invalid
+	## If the transaction is from an entity, return False to show row invalid.
 	if row_list[15] != '':
 		return (False, None)
-	## If TRANSACTION_DT is an invalid date (e.g., empty, malformed)
+	## If TRANSACTION_DT is an invalid date (e.g., empty, malformed):
 	if len(row['year']) < 4:
 		return (False, None)
-	## If ZIP_CODE is an invalid zip code (i.e., empty, fewer than five digits)
+	## If ZIP_CODE is an invalid zip code (i.e., empty, fewer than five digits):
 	if len(row['zip-code']) < 5:
 		return (False, None)
-	## If the NAME is an invalid name (e.g., empty, malformed)
+	## If the NAME is an invalid name (e.g., empty, malformed):
 	if len(row['name']) == 0:
 		return (False, None)
-	## If any lines in the input file contains empty cells in the CMTE_ID or TRANSACTION_AMT fields
+	## If any lines in the input file contains empty cells in the CMTE_ID or TRANSACTION_AMT fields:
 	if len(row['recipient']) == 0:
 		return (False, None)
 	if len(row['amount']) == 0:
 		return (False, None)
-	# if the amount is 0 or negative, ignore
+	## If the amount is 0 or negative, ignore.
 	try:
 		int(row['amount'])
 	except:

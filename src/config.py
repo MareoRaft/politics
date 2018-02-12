@@ -1,6 +1,8 @@
 """ config settings that python files can use """
+from decimal import Decimal, ROUND_HALF_UP
 from os import path
 REPO_PATH = path.dirname(path.dirname(path.abspath(__file__)))
+
 
 # Paths
 PATH_DICT = {
@@ -22,6 +24,7 @@ def PATH(keyword, num=None):
 	else:
 		raise ValueError('Nonempty num and bad keyword.')
 
+
 # Percentile
 def get_percentile(file_path):
 	""" gets percentile from percentile file """
@@ -29,6 +32,7 @@ def get_percentile(file_path):
 		percentile_string = file.read()
 	percentile = int(percentile_string.strip())
 	return percentile
+
 
 # Data columns
 ## col names for government input files
@@ -73,10 +77,16 @@ def convert_zip_code(zip_code):
 	return zip_code[:5]
 def convert_year(date_string):
 	return date_string[-4:]
+def round_normally(x):
+	""" Rounds decimals of .5 down, and decimals greater than .5 up. """
+	# note that Python's builtin 'round' function does not round 0.5 up.
+	return Decimal(x).quantize(0, ROUND_HALF_UP)
 def convert_amount(amount_string):
-	return int(amount_string)
+	# Note that "Percentile calculations should be rounded to the whole dollar (drop anything below $.50 and round anything from $.50 and up to the next dollar)".  We perform that rounding here.
+	return int(round_normally(float(amount_string)))
 COL_CONVERTERS = {
 	'zip-code': convert_zip_code,
 	'year': convert_year,
 	'amount': convert_amount,
 }
+

@@ -3,16 +3,6 @@ import pytest
 from lib.helpers import *
 
 
-def test_convert_zip_code():
-	assert convert_zip_code('90017') == '90017'
-	assert convert_zip_code('028956146') == '02895'
-	assert convert_zip_code('307502818') == '30750'
-
-def test_convert_year():
-	assert convert_year('1986') == '1986'
-	assert convert_year('01032017') == '2017'
-	assert convert_year('01122018') == '2018'
-
 def test_row_string_to_row():
 	# entity
 	row_string = 'C00629618|N|TER|P|201701230300133512|15C|IND|PEREZ, JOHN A|LOS ANGELES|CA|90017|PRINCIPAL|DOUBLE NICKEL ADVISORS|01032017|40|H6CA34245|SA01251735122|1141239|||2012520171368850783'
