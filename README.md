@@ -1,44 +1,47 @@
 # politics
 
-## dependencies
+
+
+## Dependencies
 Installation procedure:
 
-Install python3.
+Install python3 or python2.
 
-(Details: Tested with python3 (3.6.1) on my system, but should work with any version of python3.  download.py may fail for python 3.4 and earlier due to changes in the builtin subprocess module, but download.py is not currently used in the script anyway.  Not compatible with python2)
-
-Install the following PyPI modules onto your python3 installation:
+NO dependencies necessary for main script.  For additional functionalities, install:
+  * colorlog (only if you want to run the unit tests)
   * pytest (only if you want to run the unit tests)
   * wget (only if you want to automate downloading the government data files)
   * zipfile (only if you want to automate downloading the government data files)
 
-## run instructions
 
-Make sure you have 'python3' in your PATH and that this 'python3' points to your python3 installation.  Navigate to the root of the repo and execute
+
+## Run instructions
+
+Make sure you have 'python' in your PATH and that this 'python' points to your python3 or python2 installation.  Navigate to the root of the repo and execute
 
     sh ./run.sh
 
-## approach
+Note that a few liberties were taken in interpreting whether a value was valid or not.  For example, I decided that a transaction with an amount of 0 or less was invalid, and so my program discards those records.  See `src/lib/helpers.py > row_string_to_row` for the code pertaining to record validation.
 
-Consider running a linter at the end or addint git-lint to the git-commit but I think it's mostly red tape right now.
 
-Need to know when values are 'malformed' so we can omit those rows, possibly on pandas input
 
-remember to update the list of dependencies when you're finished
+## Approach
 
-consider a 'database engine' or multithreading.
+Firstly, to simulate a streaming scenario, I created the module `src/lib/stream.py`.  This module reads the lines of an input file one at a time, executes some function, and writes the output of that function to a separate file in append mode.
 
-see https://stackoverflow.com/questions/34740592/skip-certain-lines-from-file-using-python-pandas#34741278 for performance differences depending on file size
+Now, to keep track of the data, two objects were implemented in `src/lib/data_container.py`.  The first object, `Donors` keeps a record of all donors.  It can also tell which donors are repeat donors.  The second object, `Contributions`, keeps a record of all 'repeat contributions'.  It stores the amount of each 'repeat contribution' along with its year, zip code, and recipient.  Both of these objects are implemented as dictionaries because reading and writing to dictionaries is extremely fast.  This is because the keys are internally implemented in a tree structure.
 
----create a correct_output.txt file in each test folder (or the small ones at least)
-   make a new small one (say 15 entries) and calculate the correct_output.txt file yourself.
-   then fix the thing above and then run the test
+The program starts with the execution of the `main` function which sets up the donor and contribution lists.  Those two lists persist throughout the program.  Then the function `process_line` is run repeatedly, once on each line of the input file `itcont.txt`.  Therefore, the algorithm glueing everything together is `src/lib/main.py > process_line` and is the most important piece of code to look at.
 
-the prompt says a donor 'in a prior calendar year' which suggests that a donor twice in the SAME year is NOT a repeat donor.....YES we DO have to change the way we detect REPEAT donors
+Here is a summary of how `process_line` works.  It first validates the input record, discarding it if it is bad input.  If the record has valid data, it adds the donor to the list of donors.  It then detects if the donor is a repeat contributor.  If the donor is a repeat contributor, it adds the contribution to the list of repeat contributions and then retrieves the appropriate output (recipient, zip code, year, percentile amount, total repeat contribution amount, and number of repeat contributions).  But I recommend taking a look at the code yourself!
 
-If TRANSACTION_DT is an invalid date (e.g., empty, malformed)
-If ZIP_CODE is an invalid zip code (i.e., empty, fewer than five digits)
-If the NAME is an invalid name (e.g., empty, malformed)
-If any lines in the input file contains empty cells in the CMTE_ID or TRANSACTION_AMT fields
+Thanks for taking a look at my project!  :)
 
+
+
+## Supplementary information
+
+If you want to run the unit tests, then
+  1. install pytest
+  2. execute `py.test` at the root of the repo
 
