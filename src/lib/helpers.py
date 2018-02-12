@@ -3,10 +3,10 @@ import numpy
 from config import convert_zip_code, convert_year, convert_amount
 
 def get_donor_id(row):
-	return row['zip-code'] + row['name']
+	return (row['zip-code'], row['name'])
 
 def get_block_id(row):
-	return row['year'] + row['zip-code'] + row['recipient']
+	return (row['year'], row['zip-code'], row['recipient'])
 
 def row_string_to_row(row_string):
 	""" Takes in a single line (string) then validates and converts it to a 'row' for the dataframe.
