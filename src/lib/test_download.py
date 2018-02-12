@@ -29,9 +29,5 @@ def test_end_year_to_url():
 	assert end_year_to_url(2012) == 'https://cg-519a459a-0ea3-42c2-b7bc-fa1143481f74.s3-us-gov-west-1.amazonaws.com/bulk-downloads/2012/indiv12.zip'
 
 def test_download_data():
-	download_data(2012, PATH('temp'))
-	download_data(2014, PATH('temp'))
-	download_data(2016, PATH('temp'))
 	download_data(2018, PATH('temp'))
-	download_data(2020, PATH('temp'))
 
