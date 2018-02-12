@@ -5,7 +5,7 @@ import pytest
 from config import *
 from lib.helpers import get_donor_id, get_block_id
 from lib.data_container import *
-from lib.stream import stream
+from main import main
 
 
 # Donors
@@ -87,17 +87,17 @@ def test_Contributions_add():
 	assert len(c.contribs[b_id]) == 2
 
 
-# stream
-def test_stream():
+# main
+def test_main():
 	# a single entity
-	d = stream(PATH('test', 1))
+	d = main(PATH('test', 1))
 	assert len(d.donors) == 0
 
 	# a single individual (not entity)
-	d = stream(PATH('test', 2))
+	d = main(PATH('test', 2))
 	assert len(d.donors) == 1
 
-	# seven records (but only 4 donors)
-	d = stream(PATH('test', 3))
+	# 7 records (but only 4 donors)
+	d = main(PATH('test', 3))
 	assert len(d.donors) == 4
 
