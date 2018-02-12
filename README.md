@@ -8,10 +8,9 @@ Install python3.
 (Details: Tested with python3 (3.6.1) on my system, but should work with any version of python3.  download.py may fail for python 3.4 and earlier due to changes in the builtin subprocess module, but download.py is not currently used in the script anyway.  Not compatible with python2)
 
 Install the following PyPI modules onto your python3 installation:
-  * numpy (only for the ceil function)
-  * pytest (if running tests)
-  * wget (if using download.py)
-  * zipfile (if using download.py)
+  * pytest (only if you want to run the unit tests)
+  * wget (only if you want to automate downloading the government data files)
+  * zipfile (only if you want to automate downloading the government data files)
 
 ## run instructions
 

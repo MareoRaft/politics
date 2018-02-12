@@ -1,4 +1,4 @@
-import numpy
+import math
 
 from config import convert_zip_code, convert_year, convert_amount
 
@@ -73,7 +73,7 @@ def ordinal_rank_percentile(percentile, lis):
 	lis = sorted(lis)
 	num_vals = len(lis)
 	# note that the following would fail in python2
-	ordinal_rank = int(numpy.ceil(percentile/100 * num_vals))
+	ordinal_rank = math.ceil(percentile/100 * num_vals)
 	ordinal_index = ordinal_rank - 1
 	percentile_val = lis[ordinal_index]
 	return percentile_val
