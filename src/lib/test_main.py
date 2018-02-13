@@ -36,19 +36,19 @@ def test_main_6():
 	main(PATH('test', 6))
 	# 1.5-2.5 seconds
 
-def test_main_7():
-	# 1,000,000 records
-	main(PATH('test', 7))
-	# 15.5 - 16.5 seconds
-	# tuples more or less the same speed as concatenation
-	# 15.5 - 16 seconds
+# def test_main_7():
+# 	# 1,000,000 records
+# 	main(PATH('test', 7))
+# 	# 15.5 - 16.5 seconds
+# 	# tuples more or less the same speed as concatenation
+# 	# 15.5 - 16 seconds
 
 def test_main_8():
 	# A slew of use cases that could catch potential glitches
 	main(PATH('test', 8))
 
-def test_main_9():
-	# 10,000,000 records (actually, a little less)
-	main(PATH('test', 9))
-	# 84 seconds
+# def test_main_9():
+# 	# 10,000,000 records (actually, a little less)
+# 	main(PATH('test', 9))
+# 	# 84 seconds
 
