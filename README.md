@@ -45,5 +45,5 @@ If you want to run the unit tests, then
   1. install pytest
   2. execute `py.test` at the root of the repo
 
-*Note that the tests `insight_testsuite/tests/test_7` and `insight_testsuite/tests/test_9` are ommitted from the GitHub repository because the amount of data in the input files was is large.
+*Note that the tests `insight_testsuite/tests/test_7` and `insight_testsuite/tests/test_9` are ommitted from the GitHub repository because the size of the input files is too large.
 
